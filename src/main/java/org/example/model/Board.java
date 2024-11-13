@@ -10,5 +10,10 @@ public class Board {
         this.column = column;
     }
 
+    public void checkMatchingCells(String sign){
+
+    }
+
+
 
 }
