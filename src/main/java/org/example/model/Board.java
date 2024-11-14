@@ -10,9 +10,15 @@ public class Board {
         this.column = column;
     }
 
-    public void checkMatchingCells(String sign){
-
+    public int getRow(){
+        return row;
     }
+
+    public int getColumn(){
+        return column;
+    }
+
+
 
 
 
