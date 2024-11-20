@@ -8,7 +8,7 @@ public class BoardController {
     Player player = new Player("Player1", "white");
     Player player2 = new Player("Player2", "black");
 
-    public void updateBoard() {
+    public void updateBoard(String color, int[] cell) {
 
     }
 
@@ -17,8 +17,6 @@ public class BoardController {
     int diagonalAmt = 11;
     int diagonalAmt2 = 9;
 
-
-
     public void checkTheBoard(String color, int[] cell) {
         checkMatchingCells(color,cell,rowAmt);
         checkMatchingCells(color,cell,columnAmt);
@@ -26,22 +24,22 @@ public class BoardController {
         checkMatchingCells(color,cell,diagonalAmt2);
     }
 
-    boolean fiveMatchings = false;
+    boolean fiveMatching = false;
 
     public void checkMatchingCells(String color, int[] cell, int number) {
         int[] cell2 = leftCell(cell, number);
-        if (getCellValue(cell2).equals(color)) {
+        if (getCellValue(cell2).equals(color)&&getCellValue(cell2)!=null) {
             int[] cell3 = leftCell(cell2, number);
             if (getCellValue(cell3).equals(color)) {
                 int[] cell4 = leftCell(cell3, number);
                 if (getCellValue(cell4).equals(color)) {
                     int[] cell5 = leftCell(cell4, number);
                     if (getCellValue(cell5).equals(color)) {
-                        fiveMatchings = true;
+                        fiveMatching = true;
                     } else {
                         cell5 = rightCell(cell, number);
                         if (getCellValue(cell5).equals(color)) {
-                            fiveMatchings = true;
+                            fiveMatching = true;
                         }
                     }
                 } else {
@@ -49,7 +47,7 @@ public class BoardController {
                     if (getCellValue(cell4).equals(color)) {
                         int[] cell5 = rightCell(cell4, number);
                         if (getCellValue(cell5).equals(color)) {
-                            fiveMatchings = true;
+                            fiveMatching = true;
                         }
                     }
                 }
@@ -60,7 +58,7 @@ public class BoardController {
                     if (getCellValue(cell4).equals(color)) {
                         int[] cell5 = rightCell(cell4, number);
                         if (getCellValue(cell5).equals(color)) {
-                            fiveMatchings = true;
+                            fiveMatching = true;
                         }
                     }
                 }
@@ -74,7 +72,7 @@ public class BoardController {
                     if (getCellValue(cell4).equals(color)) {
                         int[] cell5 = rightCell(cell4, number);
                         if (getCellValue(cell5).equals(color)) {
-                            fiveMatchings = true;
+                            fiveMatching = true;
                         }
                     }
                 }
