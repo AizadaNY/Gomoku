@@ -25,9 +25,7 @@ public class Board {
     }
 
     public void checkRight(int matchingNumber){
-        for (int i = 0; i < matchingNumber; i++) {
 
-        }
     }
 
     public void checkLeft(int matchingNumber){
