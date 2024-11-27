@@ -1,10 +1,14 @@
 package org.example.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Board {
 
     private int row;
     private int column;
     private String [][] board;
+    private boolean moved=false;
 
     public Board(int row, int column) {
         this.row = row;
@@ -20,43 +24,29 @@ public class Board {
         return column;
     }
 
+    Map<int[],String> map=new HashMap<>();
     public void updateBoard(String color, int[] cell) {
-
+       if(map.containsKey(cell)){
+           System.out.println("Please select other location");
+           moved=false;
+       }else{
+           map.put(cell, color);
+           moved=true;
+       }
     }
 
-    public void checkRight(int matchingNumber){
-
-    }
-
-    public void checkLeft(int matchingNumber){
+    public void checkRight(int matchingNumber,int[] cell,String color){
         for (int i = 0; i < matchingNumber; i++) {
+            int[] cell2;
+            for (int j = 0; j < cell.length; j++) {
+                 cell2[j]=cell[j+1];
+            }
+            if(map.containsKey(cell2)){
 
+            }
         }
     }
 
-    public void checkUp(int matchingNumber){
-        for (int i = 0; i < matchingNumber; i++) {
-
-        }
-    }
-
-    public void checkDown(int matchingNumber){
-        for (int i = 0; i < matchingNumber; i++) {
-
-        }
-    }
-
-    public void checkDiagonal1(int matchingNumber){
-        for (int i = 0; i < matchingNumber; i++) {
-
-        }
-    }
-
-    public void checkDiagonal2(int matchingNumber){
-        for (int i = 0; i < matchingNumber; i++) {
-
-        }
-    }
 
 
 
