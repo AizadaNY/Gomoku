@@ -37,7 +37,7 @@ public class Board {
 
     public void checkRight(int matchingNumber,int[] cell,String color){
         for (int i = 0; i < matchingNumber; i++) {
-            int[] cell2;
+            int[] cell2=null;
             for (int j = 0; j < cell.length; j++) {
                  cell2[j]=cell[j+1];
             }
