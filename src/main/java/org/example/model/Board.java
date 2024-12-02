@@ -7,81 +7,94 @@ public class Board {
 
     private int row;
     private int column;
-    private String [][] board;
-    private boolean moved=false;
+    private String[][] board;
+    private boolean moved = false;
+    private boolean isMatched = false;
 
     public Board(int row, int column) {
         this.row = row;
         this.column = column;
-        board=new String[row][column];
+        board = new String[row][column];
     }
 
-    public int getRow(){
+    public int getRow() {
         return row;
     }
 
-    public int getColumn(){
+    public int getColumn() {
         return column;
     }
 
-    Map<int[],String> map=new HashMap<>();
+    Map<int[], String> map = new HashMap<>();
+
     public void updateBoard(String color, int[] cell) {
-       if(map.containsKey(cell)){
-           System.out.println("Please select other location");
-           moved=false;
-       }else{
-           map.put(cell, color);
-           moved=true;
-       }
-    }
-
-    public void checkRight(int matchingNumber,int[] cell,String color){
-        for (int i = 0; i < matchingNumber; i++) {
-            int[] cell2=null;
-            for (int j = 0; j < cell.length; j++) {
-                 cell2[j]=cell[j+1];
-            }
-            if(map.containsKey(cell2)){
-
-            }
+        if (map.containsKey(cell)) {
+            System.out.println("Please select other location");
+            moved = false;
+        } else {
+            map.put(cell, color);
+            moved = true;
         }
     }
 
+    int count=0;
+    public boolean checkLine(int[] cell,int matchingNumber, int moveCount ) {
+        for (int i = 0; i < matchingNumber; i++) {
+            int[] cell2 = null;
+            for (int j = 0; j < cell.length; j++) {
+                cell2[j] = cell[j + moveCount ];
+            }
+            if (map.get(cell).equals(map.get(cell2))) {
+                isMatched = true;
+                count++;
+            } else {
+                isMatched = false;
+                break;
+            }
+        }
+        return true;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    int rowAmt = 1;
+    int rightRow = 1;
+    int leftRow = 1;
     int columnAmt = 10;
     int diagonalAmt = 11;
     int diagonalAmt2 = 9;
 
+    public boolean checkBoard(int[] cell,int matchingNumber){
+        if(checkLine(cell, matchingNumber, rightRow)==true){
+            System.out.println(matchingNumber + " matching numbers");
+        }else{
+            checkLine(cell, (matchingNumber-count) , leftRow);
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public void checkTheBoard(String color, int[] cell) {
-        checkMatchingCells(color,cell,rowAmt);
-        checkMatchingCells(color,cell,columnAmt);
-        checkMatchingCells(color,cell,diagonalAmt);
-        checkMatchingCells(color,cell,diagonalAmt2);
+        checkMatchingCells(color, cell, rowAmt);
+        checkMatchingCells(color, cell, columnAmt);
+        checkMatchingCells(color, cell, diagonalAmt);
+        checkMatchingCells(color, cell, diagonalAmt2);
     }
 
     boolean fiveMatching = false;
 
     public void checkMatchingCells(String color, int[] cell, int number) {
         int[] cell2 = leftCell(cell, number);
-        if (getCellValue(cell2).equals(color)&&getCellValue(cell2)!=null) {
+        if (getCellValue(cell2).equals(color) && getCellValue(cell2) != null) {
             int[] cell3 = leftCell(cell2, number);
             if (getCellValue(cell3).equals(color)) {
                 int[] cell4 = leftCell(cell3, number);
@@ -153,8 +166,6 @@ public class Board {
         }
         return nextCell;
     }
-
-
 
 
 }
