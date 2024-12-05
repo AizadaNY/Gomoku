@@ -27,7 +27,7 @@ public class Board {
 
     Map<int[], String> map = new HashMap<>();
 
-    public void updateBoard(String color, int[] cell) {
+    public void updateBoard(String color, int[] intersect) {
         if (map.containsKey(cell)) {
             System.out.println("Please select other location");
             moved = false;
@@ -37,12 +37,13 @@ public class Board {
         }
     }
 
-    int count=0;
-    public boolean checkLine(int[] cell,int matchingNumber, int moveCount ) {
+    int count = 0;
+
+    public boolean checkLine(int[] cell, int matchingNumber, int moveCount) {
         for (int i = 0; i < matchingNumber; i++) {
             int[] cell2 = null;
             for (int j = 0; j < cell.length; j++) {
-                cell2[j] = cell[j + moveCount ];
+                cell2[j] = cell[j + moveCount];
             }
             if (map.get(cell).equals(map.get(cell2))) {
                 isMatched = true;
@@ -56,31 +57,34 @@ public class Board {
     }
 
     int rightRow = 1;
-    int leftRow = 1;
-    int columnAmt = 10;
-    int diagonalAmt = 11;
-    int diagonalAmt2 = 9;
+    int columnUp = 10;
+    int diagonal1 = 11;
+    int diagonal2 = 9;
 
-    public boolean checkBoard(int[] cell,int matchingNumber){
-        if(checkLine(cell, matchingNumber, rightRow)==true){
+    public boolean checkBoard(int[] cell, int matchingNumber) {
+        if (checkLine(cell, matchingNumber, rightRow) == true) {
             System.out.println(matchingNumber + " matching numbers");
-        }else{
-            checkLine(cell, (matchingNumber-count) , leftRow);
+        } else {
+            checkLine(cell, (matchingNumber - count), -rightRow);
+        }
+        if (checkLine(cell, matchingNumber, columnUp) == true) {
+
+        } else {
+            checkLine(cell, matchingNumber, -columnUp);
+        }
+        if (checkLine(cell, matchingNumber, diagonal1) == true) {
+
+        } else {
+            checkLine(cell, matchingNumber, -diagonal1);
+        }
+        if (checkLine(cell, matchingNumber, diagonal2) == true) {
+
+        } else {
+            checkLine(cell, (matchingNumber - count), (-diagonal2));
         }
 
 
-
     }
-
-
-
-
-
-
-
-
-
-
 
 
     public void checkTheBoard(String color, int[] cell) {
