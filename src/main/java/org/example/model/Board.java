@@ -5,11 +5,15 @@ import java.util.Map;
 
 public class Board {
 
+    //1.so board itself will be stored as a 2D Array
+    //2.but point locations will be stored in Map<int[]> is this the correct way to implement?
+    // and also hw can i store intersection of 4 cells , i have array of 4 cells only on my mind.
+
     private int row;
     private int column;
     private String[][] board;
-    private boolean moved = false;
-    private boolean isMatched = false;
+    private boolean isUserMadeMove = false;
+    private boolean winningMatch = false;
 
     public Board(int row, int column) {
         this.row = row;
@@ -25,151 +29,68 @@ public class Board {
         return column;
     }
 
-    Map<int[], String> map = new HashMap<>();
+    Map<int[], String> allPointLocation = new HashMap<>();
 
-    public void updateBoard(String color, int[] intersect) {
-        if (map.containsKey(cell)) {
+    public void updateBoard(String color, int[] location) {
+
+        if (allPointLocation.containsKey(location)) {
             System.out.println("Please select other location");
-            moved = false;
+            isUserMadeMove = false;
         } else {
-            map.put(cell, color);
-            moved = true;
+            allPointLocation.put(location, color);
+            isUserMadeMove = true;
         }
     }
 
-    int count = 0;
+    int matchedPointCount = 0;
 
-    public boolean checkLine(int[] cell, int matchingNumber, int moveCount) {
-        for (int i = 0; i < matchingNumber; i++) {
-            int[] cell2 = null;
-            for (int j = 0; j < cell.length; j++) {
-                cell2[j] = cell[j + moveCount];
+    public boolean checkLine(int[] pointLocation, int matchingCount, int counter) {
+        for (int i = 0; i < matchingCount; i++) {
+            int[] nextPointLocation = new int[pointLocation.length];
+            for (int j = 0; j < pointLocation.length; j++) {
+                nextPointLocation[j] = pointLocation[j + counter];
             }
-            if (map.get(cell).equals(map.get(cell2))) {
-                isMatched = true;
-                count++;
+            if (allPointLocation.get(pointLocation).equals(allPointLocation.get(nextPointLocation))) {
+                matchedPointCount++;
             } else {
-                isMatched = false;
-                break;
+                return false;
             }
         }
         return true;
     }
 
-    int rightRow = 1;
-    int columnUp = 10;
-    int diagonal1 = 11;
-    int diagonal2 = 9;
-
-    public boolean checkBoard(int[] cell, int matchingNumber) {
-        if (checkLine(cell, matchingNumber, rightRow) == true) {
-            System.out.println(matchingNumber + " matching numbers");
-        } else {
-            checkLine(cell, (matchingNumber - count), -rightRow);
+    public boolean checkBoard(int[] pointLocation, int matchingCount) {
+        if (checkLine(pointLocation, matchingCount, Constants.ROW_COUNTER) == true) {
+            winningMatch = true;
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.ROW_COUNTER)) == true) {
+            winningMatch = true;
         }
-        if (checkLine(cell, matchingNumber, columnUp) == true) {
-
-        } else {
-            checkLine(cell, matchingNumber, -columnUp);
+        if (checkLine(pointLocation, matchingCount, Constants.COLUMN_COUNTER) == true) {
+            winningMatch = true;
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.COLUMN_COUNTER)) == true) {
+            winningMatch = true;
         }
-        if (checkLine(cell, matchingNumber, diagonal1) == true) {
-
-        } else {
-            checkLine(cell, matchingNumber, -diagonal1);
+        if (checkLine(pointLocation, matchingCount, Constants.FIRST_DIAGONAL_COUNTER) == true) {
+            winningMatch = true;
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.FIRST_DIAGONAL_COUNTER)) == true) {
+            winningMatch = true;
         }
-        if (checkLine(cell, matchingNumber, diagonal2) == true) {
-
-        } else {
-            checkLine(cell, (matchingNumber - count), (-diagonal2));
+        if (checkLine(pointLocation, matchingCount, Constants.SECOND_DIAGONAL_COUNTER) == true) {
+            winningMatch = true;
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.SECOND_DIAGONAL_COUNTER)) == true) {
+            winningMatch = true;
         }
-
-
+        return winningMatch;
     }
 
 
-    public void checkTheBoard(String color, int[] cell) {
-        checkMatchingCells(color, cell, rowAmt);
-        checkMatchingCells(color, cell, columnAmt);
-        checkMatchingCells(color, cell, diagonalAmt);
-        checkMatchingCells(color, cell, diagonalAmt2);
-    }
+    //3.In checkBoard method if else statements  will be executed simultaneously, if yes how to check
 
-    boolean fiveMatching = false;
+    //4.
 
-    public void checkMatchingCells(String color, int[] cell, int number) {
-        int[] cell2 = leftCell(cell, number);
-        if (getCellValue(cell2).equals(color) && getCellValue(cell2) != null) {
-            int[] cell3 = leftCell(cell2, number);
-            if (getCellValue(cell3).equals(color)) {
-                int[] cell4 = leftCell(cell3, number);
-                if (getCellValue(cell4).equals(color)) {
-                    int[] cell5 = leftCell(cell4, number);
-                    if (getCellValue(cell5).equals(color)) {
-                        fiveMatching = true;
-                    } else {
-                        cell5 = rightCell(cell, number);
-                        if (getCellValue(cell5).equals(color)) {
-                            fiveMatching = true;
-                        }
-                    }
-                } else {
-                    cell4 = rightCell(cell, number);
-                    if (getCellValue(cell4).equals(color)) {
-                        int[] cell5 = rightCell(cell4, number);
-                        if (getCellValue(cell5).equals(color)) {
-                            fiveMatching = true;
-                        }
-                    }
-                }
-            } else {
-                cell3 = rightCell(cell, number);
-                if (getCellValue(cell3).equals(color)) {
-                    int[] cell4 = rightCell(cell3, number);
-                    if (getCellValue(cell4).equals(color)) {
-                        int[] cell5 = rightCell(cell4, number);
-                        if (getCellValue(cell5).equals(color)) {
-                            fiveMatching = true;
-                        }
-                    }
-                }
-            }
-        } else {
-            cell2 = rightCell(cell, number);
-            if (getCellValue(cell2).equals(color)) {
-                int[] cell3 = rightCell(cell2, number);
-                if (getCellValue(cell3).equals(color)) {
-                    int[] cell4 = rightCell(cell3, number);
-                    if (getCellValue(cell4).equals(color)) {
-                        int[] cell5 = rightCell(cell4, number);
-                        if (getCellValue(cell5).equals(color)) {
-                            fiveMatching = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
-    private String getCellValue(int[] cell2) {
-        return "";
-    }
 
-    public int[] leftCell(int[] cell, int count) {
-        int[] nextCell = new int[4];
-        for (int i = 0; i < 4; i++) {
-            nextCell[i] = cell[i] + count;
 
-        }
-        return nextCell;
-    }
-
-    public int[] rightCell(int[] cell, int count) {
-        int[] nextCell = new int[4];
-        for (int i = 0; i < 4; i++) {
-            nextCell[i] = cell[i] - count;
-        }
-        return nextCell;
-    }
 
 
 }
