@@ -86,7 +86,7 @@ public class Board {
 
     //3.In checkBoard method if else statements  will be executed simultaneously, if yes how to check
 
-    //4.
+
 
 
 

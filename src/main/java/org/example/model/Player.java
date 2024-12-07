@@ -10,7 +10,7 @@ public class Player {
         this.color=color;
     }
 
-    public void move(int xCoordinate,int yCoordinate){
+    public void move(int xCoordinate,int yCoordinate,){
 
     }
 }
