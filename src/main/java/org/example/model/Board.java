@@ -60,22 +60,22 @@ public class Board {
     }
 
     public boolean checkBoard(int[] pointLocation, int matchingCount) {
-        if (checkLine(pointLocation, matchingCount, Constants.ROW_COUNTER) == true) {
+        if (checkLine(pointLocation, matchingCount, Constants.ROW_COUNTER)) {
             winningMatch = true;
         } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.ROW_COUNTER)) == true) {
             winningMatch = true;
         }
-        if (checkLine(pointLocation, matchingCount, Constants.COLUMN_COUNTER) == true) {
+        if (checkLine(pointLocation, matchingCount, Constants.COLUMN_COUNTER)) {
             winningMatch = true;
         } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.COLUMN_COUNTER)) == true) {
             winningMatch = true;
         }
-        if (checkLine(pointLocation, matchingCount, Constants.FIRST_DIAGONAL_COUNTER) == true) {
+        if (checkLine(pointLocation, matchingCount, Constants.FIRST_DIAGONAL_COUNTER)) {
             winningMatch = true;
         } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.FIRST_DIAGONAL_COUNTER)) == true) {
             winningMatch = true;
         }
-        if (checkLine(pointLocation, matchingCount, Constants.SECOND_DIAGONAL_COUNTER) == true) {
+        if (checkLine(pointLocation, matchingCount, Constants.SECOND_DIAGONAL_COUNTER)) {
             winningMatch = true;
         } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.SECOND_DIAGONAL_COUNTER)) == true) {
             winningMatch = true;
@@ -85,12 +85,6 @@ public class Board {
 
 
     //3.In checkBoard method if else statements  will be executed simultaneously, if yes how to check
-
-
-
-
-
-
 
 
 }
