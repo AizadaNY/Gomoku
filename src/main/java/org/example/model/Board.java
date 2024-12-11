@@ -23,11 +23,11 @@ public class Board {
         board = new String[row][column];
     }
 
-    public int getRow(){
+    public int getRow() {
         return row;
     }
 
-    public int getColumn(){
+    public int getColumn() {
         return column;
     }
 
@@ -50,13 +50,26 @@ public class Board {
     Map<int[], String> allPointLocation = new HashMap<>();
 
     public void updateBoard(String color, int[] location) {
-
         if (allPointLocation.containsKey(location)) {
+            System.out.println("Please select other location");
+            isUserMadeMove = false;
+        } else if () {
             System.out.println("Please select other location");
             isUserMadeMove = false;
         } else {
             allPointLocation.put(location, color);
             isUserMadeMove = true;
+        }
+    }
+
+    public boolean isLocationValid(int[] location) {
+        if((location[1]-location[0])==1 &&(location[3]-location[2])==1&&
+                (location[2]-location[0])==10 &&(location[3]-location[1])==10){
+            return true;
+        }else if(location[0]>){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -101,16 +114,18 @@ public class Board {
         return winningMatch;
     }
 
-    public void checkIfBoardIsFull(){
-
+    public void isBoardFull() {
+        int allBoardPointCount = (getRow() + 1) * (getColumn() + 1);
+        if (allPointLocation.size() > allBoardPointCount) {
+            isBoardFull = true;
+        }
     }
+
     public void gameResult() {
         if (winningMatch || isBoardFull) {
             setIsGameOver(true);
         }
     }
-
-    //3.In checkBoard method if else statements  will be executed simultaneously, if yes how to check
 
 
 }
