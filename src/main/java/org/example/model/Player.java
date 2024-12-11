@@ -23,16 +23,15 @@ public class Player {
 
     public int[] move() {
         int[] pointLocation = new int[4];
-        System.out.println("Please provide your location");
+        System.out.println(getName()+ " your move");
         for (int i = 0; i < 4; i++) {
-            pointLocation[i] = getInput();
+            pointLocation[i] = getInput(i);
         }
         return pointLocation;
     }
 
-    public int getInput() {
-
-        System.out.println("-");
+    public int getInput(int cellNum) {
+        System.out.println("cell"+cellNum);
         return scanner.nextInt();
     }
 }

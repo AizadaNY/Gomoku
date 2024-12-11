@@ -10,14 +10,14 @@ public class Game {
         Player player2 = new Player("Player2", "black");
         Board board = new Board(10, 10);
 
-        while (board.getIsGameOver()) {
-            while (board.isPlayerMadeMove()) {
+        while (!board.getIsGameOver()) {
+            while (!board.isPlayerMadeMove()) {
                 int[] player1Location = player1.move();
                 board.updateBoard(player1.getColor(), player1Location);
             }
-            while (board.isPlayerMadeMove()) {
-                int[] player2Location = player1.move();
-                board.updateBoard(player1.getColor(), player2Location);
+            while (!board.isPlayerMadeMove()) {
+                int[] player2Location = player2.move();
+                board.updateBoard(player2.getColor(), player2Location);
             }
 
         }

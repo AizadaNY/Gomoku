@@ -53,7 +53,7 @@ public class Board {
         if (allPointLocation.containsKey(location)) {
             System.out.println("Please select other location");
             isUserMadeMove = false;
-        } else if () {
+        } else if (!isLocationValid(location)) {
             System.out.println("Please select other location");
             isUserMadeMove = false;
         } else {
@@ -66,8 +66,8 @@ public class Board {
         if((location[1]-location[0])==1 &&(location[3]-location[2])==1&&
                 (location[2]-location[0])==10 &&(location[3]-location[1])==10){
             return true;
-        }else if(location[0]>){
-            return true;
+//        }else if(location[0]>){
+//            return true;
         }else{
             return false;
         }
@@ -93,22 +93,22 @@ public class Board {
     public boolean checkBoard(int[] pointLocation, int matchingCount) {
         if (checkLine(pointLocation, matchingCount, Constants.ROW_COUNTER)) {
             winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.ROW_COUNTER)) == true) {
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.ROW_COUNTER))) {
             winningMatch = true;
         }
         if (checkLine(pointLocation, matchingCount, Constants.COLUMN_COUNTER)) {
             winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.COLUMN_COUNTER)) == true) {
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.COLUMN_COUNTER))) {
             winningMatch = true;
         }
         if (checkLine(pointLocation, matchingCount, Constants.FIRST_DIAGONAL_COUNTER)) {
             winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.FIRST_DIAGONAL_COUNTER)) == true) {
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.FIRST_DIAGONAL_COUNTER))) {
             winningMatch = true;
         }
         if (checkLine(pointLocation, matchingCount, Constants.SECOND_DIAGONAL_COUNTER)) {
             winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.SECOND_DIAGONAL_COUNTER)) == true) {
+        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.SECOND_DIAGONAL_COUNTER))) {
             winningMatch = true;
         }
         return winningMatch;
