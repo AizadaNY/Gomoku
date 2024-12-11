@@ -6,10 +6,19 @@ public class Player {
 
     private String name;
     private String color;
+    Scanner scanner = new Scanner(System.in);
 
     public Player(String name, String color) {
         this.name = name;
         this.color = color;
+    }
+
+    public String getColor(){
+        return color;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public int[] move() {
@@ -22,7 +31,7 @@ public class Player {
     }
 
     public int getInput() {
-        Scanner scanner = new Scanner(System.in);
+
         System.out.println("-");
         return scanner.nextInt();
     }

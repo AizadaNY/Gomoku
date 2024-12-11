@@ -14,6 +14,8 @@ public class Board {
     private String[][] board;
     private boolean isUserMadeMove = false;
     private boolean winningMatch = false;
+    private boolean isGameOver = false;
+    private boolean isBoardFull = false;
 
     public Board(int row, int column) {
         this.row = row;
@@ -21,12 +23,28 @@ public class Board {
         board = new String[row][column];
     }
 
-    public int getRow() {
+    public int getRow(){
         return row;
     }
 
-    public int getColumn() {
+    public int getColumn(){
         return column;
+    }
+
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public Boolean isPlayerMadeMove() {
+        return isUserMadeMove;
+    }
+
+    public boolean getIsGameOver() {
+        return isGameOver;
+    }
+
+    public void setIsGameOver(boolean gameOver) {
+        isGameOver = gameOver;
     }
 
     Map<int[], String> allPointLocation = new HashMap<>();
@@ -83,6 +101,14 @@ public class Board {
         return winningMatch;
     }
 
+    public void checkIfBoardIsFull(){
+
+    }
+    public void gameResult() {
+        if (winningMatch || isBoardFull) {
+            setIsGameOver(true);
+        }
+    }
 
     //3.In checkBoard method if else statements  will be executed simultaneously, if yes how to check
 
