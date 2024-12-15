@@ -11,15 +11,11 @@ public class Game {
         Board board = new Board(10, 10);
 
         while (!board.getIsGameOver()) {
-            while (!board.isPlayerMadeMove()) {
-                int[] player1Location = player1.move();
-                board.updateBoard(player1.getColor(), player1Location);
+            if (player1.isMoved()) {
+                player2.move();
+            } else {
+                player1.move();
             }
-            while (!board.isPlayerMadeMove()) {
-                int[] player2Location = player2.move();
-                board.updateBoard(player2.getColor(), player2Location);
-            }
-
         }
     }
 
