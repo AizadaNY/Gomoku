@@ -13,25 +13,24 @@ public class Player {
         this.color = color;
     }
 
-    public String getColor(){
+    public String getColor() {
         return color;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int[] move() {
-        int[] pointLocation = new int[4];
-        System.out.println(getName()+ " your move");
-        for (int i = 0; i < 4; i++) {
-            pointLocation[i] = getInput(i);
-        }
-        return pointLocation;
+    public int getInput(String playerName) {
+        System.out.println(playerName + "  provide your location:");
+        return scanner.nextInt();
     }
 
-    public int getInput(int cellNum) {
-        System.out.println("cell"+cellNum);
-        return scanner.nextInt();
+    public boolean isMoved(boolean isBoardUpdated) {
+        if (isBoardUpdated) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

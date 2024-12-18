@@ -12,10 +12,11 @@ public class Board {
     private int row;
     private int column;
     private String[][] board;
-    private boolean isUserMadeMove = false;
+    private boolean isBoardUpdated = false;
     private boolean winningMatch = false;
     private boolean isGameOver = false;
-    private boolean isBoardFull = false;
+    private int rowNumber;
+    private int columnNumber;
 
     public Board(int row, int column) {
         this.row = row;
@@ -35,8 +36,8 @@ public class Board {
         return board;
     }
 
-    public Boolean isPlayerMadeMove() {
-        return isUserMadeMove;
+    public Boolean getIsBoardUpdated() {
+        return isBoardUpdated;
     }
 
     public boolean getIsGameOver() {
@@ -47,29 +48,30 @@ public class Board {
         isGameOver = gameOver;
     }
 
-    Map<int[], String> allPointLocation = new HashMap<>();
 
-    public void updateBoard(String color, int[] location) {
-        if (allPointLocation.containsKey(location)) {
-            System.out.println("Please select other location");
-            isUserMadeMove = false;
-        } else if (!isLocationValid(location)) {
-            System.out.println("Please select other location");
-            isUserMadeMove = false;
-        } else {
-            allPointLocation.put(location, color);
-            isUserMadeMove = true;
-        }
+    public void setBoard(String location, String color) {
+        int rowNumber = Integer.parseInt(location.substring(0, 1));
+        int columnNumber = Integer.parseInt(location.substring(1));
+        board[rowNumber ][columnNumber] = color;
     }
 
-    public boolean isLocationValid(int[] location) {
-        if((location[1]-location[0])==1 &&(location[3]-location[2])==1&&
-                (location[2]-location[0])==10 &&(location[3]-location[1])==10){
-            return true;
-//        }else if(location[0]>){
-//            return true;
-        }else{
-            return false;
+    public boolean isLocationValid(int location) {
+        return true;
+    }
+
+    Map<Integer, String> allPointLocation = new HashMap<>();
+
+    public void updateBoard(Player player, int location) {
+        if (allPointLocation.containsKey(location)) {
+            System.out.println("Please select other location");
+            isBoardUpdated = false;
+        } else if (!isLocationValid(location)) {
+            System.out.println("Please select other location");
+            isBoardUpdated = false;
+        } else {
+            setBoard(String.valueOf(location), player.getColor());
+            allPointLocation.put(location, player.getColor());
+            isBoardUpdated = true;
         }
     }
 
@@ -90,39 +92,27 @@ public class Board {
         return true;
     }
 
-    public boolean checkBoard(int[] pointLocation, int matchingCount) {
-        if (checkLine(pointLocation, matchingCount, Constants.ROW_COUNTER)) {
-            winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.ROW_COUNTER))) {
-            winningMatch = true;
-        }
-        if (checkLine(pointLocation, matchingCount, Constants.COLUMN_COUNTER)) {
-            winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.COLUMN_COUNTER))) {
-            winningMatch = true;
-        }
-        if (checkLine(pointLocation, matchingCount, Constants.FIRST_DIAGONAL_COUNTER)) {
-            winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.FIRST_DIAGONAL_COUNTER))) {
-            winningMatch = true;
-        }
-        if (checkLine(pointLocation, matchingCount, Constants.SECOND_DIAGONAL_COUNTER)) {
-            winningMatch = true;
-        } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.SECOND_DIAGONAL_COUNTER))) {
-            winningMatch = true;
+    public boolean checkBoard(int[] pointLocation, int[] counter) {
+        for (int i = 0; i < counter.length; i++) {
+            if (checkLine(pointLocation, counter[i], Constants.ROW_COUNTER)) {
+                winningMatch = true;
+            } else if (checkLine(pointLocation, (counter[i] - matchedPointCount), (-Constants.ROW_COUNTER))) {
+                winningMatch = true;
+            }
         }
         return winningMatch;
     }
 
-    public void isBoardFull() {
-        int allBoardPointCount = (getRow() + 1) * (getColumn() + 1);
-        if (allPointLocation.size() > allBoardPointCount) {
-            isBoardFull = true;
+    public boolean isBoardFull() {
+        if ((row * column) > allPointLocation.size()) {
+            return true;
         }
+        return false;
     }
 
-    public void gameResult() {
-        if (winningMatch || isBoardFull) {
+    public void gameResult(int[] pointLocation, int[] counter) {
+        checkBoard(pointLocation, counter);
+        if (winningMatch || isBoardFull()) {
             setIsGameOver(true);
         }
     }

@@ -14,19 +14,22 @@ public class BoardController {
         this.view = view;
     }
 
-    Player player1 = new Player("1", "white");
-
-    Player player2 = new Player("2", "black");
-
-    Board getBoard() {
-        return board;
-    }
-
-    public void boardView() {
+    public void startGame(Player player1, Player player2) {
+        while (!board.getIsGameOver()) {
+            int input;
+            input = player1.getInput(player1.getName());
+            board.updateBoard(player1, input);
+            if (player1.isMoved(board.getIsBoardUpdated())) {
+                input = player2.getInput(player2.getName());
+                board.updateBoard(player2, input);
+            } else if (player2.isMoved(board.getIsBoardUpdated())) {
+                input = player1.getInput(player1.getName());
+                board.updateBoard(player1, input);
+            }
+        }
         view.getGameBoard(board);
+        board.gameResult();
     }
-
-
 
 
 }
