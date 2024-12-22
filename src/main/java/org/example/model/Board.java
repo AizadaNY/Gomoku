@@ -15,21 +15,12 @@ public class Board {
     private boolean isBoardUpdated = false;
     private boolean winningMatch = false;
     private boolean isGameOver = false;
-    private int rowNumber;
-    private int columnNumber;
+    private int playerMove;
 
     public Board(int row, int column) {
         this.row = row;
         this.column = column;
         board = new String[row][column];
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
     }
 
     public String[][] getBoard() {
@@ -49,71 +40,83 @@ public class Board {
     }
 
 
-    public void setBoard(String location, String color) {
-        int rowNumber = Integer.parseInt(location.substring(0, 1));
-        int columnNumber = Integer.parseInt(location.substring(1));
-        board[rowNumber ][columnNumber] = color;
-    }
-
-    public boolean isLocationValid(int location) {
-        return true;
+    public void setBoard(String userInput, String color) {
+        playerMove = Integer.parseInt(userInput);
+        board[Integer.parseInt(userInput.substring(0, 1))][Integer.parseInt(userInput.substring(1))] = color;
     }
 
     Map<Integer, String> allPointLocation = new HashMap<>();
 
-    public void updateBoard(Player player, int location) {
+    public void updateBoard(Player player, String userInput) {
+        int location = Integer.parseInt(userInput);
         if (allPointLocation.containsKey(location)) {
             System.out.println("Please select other location");
             isBoardUpdated = false;
-        } else if (!isLocationValid(location)) {
+        } else if (!isLocationValid(userInput)) {
             System.out.println("Please select other location");
             isBoardUpdated = false;
         } else {
             setBoard(String.valueOf(location), player.getColor());
             allPointLocation.put(location, player.getColor());
             isBoardUpdated = true;
+            gameResult(playerMove);
         }
     }
 
     int matchedPointCount = 0;
 
-    public boolean checkLine(int[] pointLocation, int matchingCount, int counter) {
-        for (int i = 0; i < matchingCount; i++) {
-            int[] nextPointLocation = new int[pointLocation.length];
-            for (int j = 0; j < pointLocation.length; j++) {
-                nextPointLocation[j] = pointLocation[j + counter];
+    public boolean checkLine(int pointLocation, int matchingCount, int counter) {
+        try {
+            int nextPointLocation = pointLocation + counter;
+            for (int i = 1; i < matchingCount; i++) {
+                if (allPointLocation.get(pointLocation).equals(allPointLocation.get(nextPointLocation))) {
+                    matchedPointCount++;
+                } else {
+                    return false;
+                }
+                nextPointLocation += counter;
             }
-            if (allPointLocation.get(pointLocation).equals(allPointLocation.get(nextPointLocation))) {
-                matchedPointCount++;
-            } else {
-                return false;
-            }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
         return true;
     }
 
-    public boolean checkBoard(int[] pointLocation, int[] counter) {
-        for (int i = 0; i < counter.length; i++) {
-            if (checkLine(pointLocation, counter[i], Constants.ROW_COUNTER)) {
+    public boolean checkBoard(int pointLocation, int matchingCount) {
+        for (int i = 0; i < Constants.COUNTER.length; i++) {
+            if (checkLine(pointLocation, matchingCount, Constants.COUNTER[i])) {
                 winningMatch = true;
-            } else if (checkLine(pointLocation, (counter[i] - matchedPointCount), (-Constants.ROW_COUNTER))) {
+            } else if (checkLine(pointLocation, (matchingCount - matchedPointCount), (-Constants.COUNTER[i]))) {
                 winningMatch = true;
+            } else {
+                winningMatch = false;
             }
         }
         return winningMatch;
     }
 
     public boolean isBoardFull() {
-        if ((row * column) > allPointLocation.size()) {
+        if (allPointLocation.size() >= (row * column)) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
-    public void gameResult(int[] pointLocation, int[] counter) {
-        checkBoard(pointLocation, counter);
+    public void gameResult(int pointLocation) {
+        checkBoard(pointLocation, Constants.MATCHING_COUNT);
         if (winningMatch || isBoardFull()) {
             setIsGameOver(true);
+        }
+    }
+
+
+    public boolean isLocationValid(String location) {
+        if (location.length() == 2) {
+            return true;
+        } else {
+            return false;
         }
     }
 

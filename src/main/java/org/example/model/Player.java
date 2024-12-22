@@ -21,9 +21,9 @@ public class Player {
         return name;
     }
 
-    public int getInput(String playerName) {
+    public String getInput(String playerName) {
         System.out.println(playerName + "  provide your location:");
-        return scanner.nextInt();
+        return scanner.next();
     }
 
     public boolean isMoved(boolean isBoardUpdated) {

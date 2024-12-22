@@ -16,7 +16,7 @@ public class BoardController {
 
     public void startGame(Player player1, Player player2) {
         while (!board.getIsGameOver()) {
-            int input;
+            String input;
             input = player1.getInput(player1.getName());
             board.updateBoard(player1, input);
             if (player1.isMoved(board.getIsBoardUpdated())) {
@@ -26,9 +26,8 @@ public class BoardController {
                 input = player1.getInput(player1.getName());
                 board.updateBoard(player1, input);
             }
+            view.getGameBoard(board);
         }
-        view.getGameBoard(board);
-        board.gameResult();
     }
 
 

@@ -17,7 +17,6 @@ public class Game {
         Player player2 = new Player("Player2", "b");
         PlayerView playerView = new PlayerView();
         PlayerController playerController = new PlayerController(player1, player2, playerView);
-         System.out.println(board.getBoard()[0][0]);
         boardController.startGame(player1, player2);
     }
 
