@@ -5,10 +5,6 @@ import java.util.Map;
 
 public class Board {
 
-    //1.so board itself will be stored as a 2D Array
-    //2.but point locations will be stored in Map<int[]> is this the correct way to implement?
-    // and also hw can i store intersection of 4 cells , i have array of 4 cells only on my mind.
-
     private int row;
     private int column;
     private String[][] board;
@@ -66,6 +62,7 @@ public class Board {
     int matchedPointCount = 0;
 
     public boolean checkLine(int pointLocation, int matchingCount, int counter) {
+        matchedPointCount = 0;
         try {
             int nextPointLocation = pointLocation + counter;
             for (int i = 1; i < matchingCount; i++) {
@@ -76,6 +73,7 @@ public class Board {
                 }
                 nextPointLocation += counter;
             }
+            return true;
 
         } catch (NullPointerException e) {
             e.printStackTrace();
